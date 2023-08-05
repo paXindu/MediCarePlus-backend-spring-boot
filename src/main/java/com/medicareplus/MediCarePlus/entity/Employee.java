@@ -1,26 +1,33 @@
 package com.medicareplus.MediCarePlus.entity;
 
-
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.Date;
+
+enum Roll{
+    DOCTOR,RECEPTIONIST,PHARMACIST, LABORATORY
+}
 
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-@Table(name="Patient")
+@Table(name="Employee")
 
-public class Patient {
+
+
+public class Employee {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int patientId;
+    private int employeeId;
 
-    private int nic;
+    @Enumerated(EnumType.STRING)
+    private Roll employeeRoll;
 
-    private String patientName;
-    private String patientDOB;
+    private String employeeName;
+
+
 }

@@ -5,15 +5,12 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.Date;
-
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class PatientDTO {
-    private int patientId;
+public class EmployeeDTO {
+    private int employeeId;
+    private String employeeName;
+    private String employeeDOB;
 
-    private int nic;
-    private String patientName;
-    private String patientDOB;
 }
