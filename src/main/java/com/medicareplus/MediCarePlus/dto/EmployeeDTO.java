@@ -9,8 +9,12 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 public class EmployeeDTO {
-    private int employeeId;
+    private int employeeNic;
+
     private String employeeName;
-    private String employeeDOB;
+
+    private String employeeRoll;
+
+
 
 }

@@ -5,15 +5,23 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.Date;
+
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
 public class PatientDTO {
-    private int patientId;
 
-    private int nic;
+
+    private int PatientNic;
+    private int PatientPhone;
+    private String PatientPassword;
     private String patientName;
     private String patientDOB;
+    private String sex;
+    private String address;
+    private String maritalStatus;
+    private String isUnder18;
+    private int emergencyContact;
+    private String relationship;
 }

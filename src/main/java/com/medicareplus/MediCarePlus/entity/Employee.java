@@ -1,14 +1,11 @@
 package com.medicareplus.MediCarePlus.entity;
 
+import com.medicareplus.MediCarePlus.util.EmployeeRoll;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-
-enum Roll{
-    DOCTOR,RECEPTIONIST,PHARMACIST, LABORATORY
-}
+import lombok.NonNull;
 
 @Entity
 @AllArgsConstructor
@@ -20,14 +17,14 @@ enum Roll{
 
 public class Employee {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int employeeId;
 
-    @Enumerated(EnumType.STRING)
-    private Roll employeeRoll;
+    @Id
+    private int employeeNic;
 
     private String employeeName;
+
+    @Enumerated(EnumType.STRING)
+    private EmployeeRoll employeeRoll;
 
 
 }

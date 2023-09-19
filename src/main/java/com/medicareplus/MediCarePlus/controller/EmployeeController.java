@@ -14,12 +14,13 @@ import java.util.List;
 
 @RestController
 @RequestMapping("Employee")
-
+@CrossOrigin
 public class EmployeeController {
     @Autowired
     private EmployeeService employeeService;
     @Autowired
     private RequestDTO requestDTO;
+
 
     @PostMapping("/saveEmployee")
     public ResponseEntity saveEmployee(@RequestBody EmployeeDTO employeeDTO ){

@@ -13,7 +13,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("Patient")
-
+@CrossOrigin
 public class PatientController {
 
 

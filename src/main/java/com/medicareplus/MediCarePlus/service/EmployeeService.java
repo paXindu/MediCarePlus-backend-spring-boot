@@ -3,13 +3,16 @@ package com.medicareplus.MediCarePlus.service;
 import com.medicareplus.MediCarePlus.dto.EmployeeDTO;
 import com.medicareplus.MediCarePlus.entity.Employee;
 import com.medicareplus.MediCarePlus.repo.EmployeeRepo;
+import com.medicareplus.MediCarePlus.util.EmployeeRoll;
 import com.medicareplus.MediCarePlus.util.VarList;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class EmployeeService {
 
 
@@ -19,22 +22,21 @@ public class EmployeeService {
     @Autowired
     private ModelMapper modelMapper;
 
-    public String saveEmployee(EmployeeDTO employeeDTO){
 
-        if (employeeRepo.existsById(employeeDTO.getEmployeeId())){
+
+    public String saveEmployee(EmployeeDTO employeeDTO) {
+
+        if (employeeRepo.existsById(employeeDTO.getEmployeeNic())) {
             return VarList.RSP_DUPLICATED;
-
-        }else {
-
+        } else {
             employeeRepo.save(modelMapper.map(employeeDTO, Employee.class));
             return VarList.RSP_SUCCESS;
+            }
 
-        }
     }
-
     public String updateEmployee(EmployeeDTO employeeDTO){
 
-        if (employeeRepo.existsById(employeeDTO.getEmployeeId())){
+        if (employeeRepo.existsById(employeeDTO.getEmployeeNic())){
             employeeRepo.save(modelMapper.map(employeeDTO, Employee.class));
             return VarList.RSP_SUCCESS;
 
