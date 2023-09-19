@@ -1,51 +1,50 @@
 package com.medicareplus.MediCarePlus.controller;
-import com.medicareplus.MediCarePlus.dto.PatientDTO;
+
+import com.medicareplus.MediCarePlus.dto.EmployeeDTO;
 import com.medicareplus.MediCarePlus.dto.RequestDTO;
-import com.medicareplus.MediCarePlus.service.PatientService;
+import com.medicareplus.MediCarePlus.service.EmployeeService;
 import com.medicareplus.MediCarePlus.util.VarList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+
 @RestController
-@RequestMapping("Patient")
+@RequestMapping("Employee")
 @CrossOrigin
-public class PatientController {
-
-
-
+public class EmployeeController {
     @Autowired
-    private PatientService patientService;
+    private EmployeeService employeeService;
     @Autowired
     private RequestDTO requestDTO;
 
-    @PostMapping("/savePatient")
-    public ResponseEntity savePatient(@RequestBody PatientDTO patientDTO ){
-        try{
-        String res=patientService.savePatient(patientDTO);
 
-        if (res.equals("00")){
-            requestDTO.setCode(VarList.RSP_SUCCESS);
-            requestDTO.setMessege("Success");
-            requestDTO.setContent(patientDTO);
-            return new ResponseEntity(requestDTO, HttpStatus.ACCEPTED);
-        }
-        else if(res.equals("06")){
-            requestDTO.setCode(VarList.RSP_DUPLICATED);
-            requestDTO.setMessege("Duplicated");
-            requestDTO.setContent(patientDTO);
-            return new ResponseEntity(requestDTO, HttpStatus.BAD_REQUEST);
-        }
-        else {
-            requestDTO.setCode(VarList.RSP_FAIL);
-            requestDTO.setMessege("Error");
-            requestDTO.setContent(null);
-            return new ResponseEntity(requestDTO, HttpStatus.BAD_REQUEST);
-        }
+    @PostMapping("/saveEmployee")
+    public ResponseEntity saveEmployee(@RequestBody EmployeeDTO employeeDTO ){
+        try{
+            String res=employeeService.saveEmployee(employeeDTO);
+
+            if (res.equals("00")){
+                requestDTO.setCode(VarList.RSP_SUCCESS);
+                requestDTO.setMessege("Success");
+                requestDTO.setContent(employeeDTO);
+                return new ResponseEntity(requestDTO, HttpStatus.ACCEPTED);
+            }
+            else if(res.equals("06")){
+                requestDTO.setCode(VarList.RSP_DUPLICATED);
+                requestDTO.setMessege("Duplicated");
+                requestDTO.setContent(employeeDTO);
+                return new ResponseEntity(requestDTO, HttpStatus.BAD_REQUEST);
+            }
+            else {
+                requestDTO.setCode(VarList.RSP_FAIL);
+                requestDTO.setMessege("Error");
+                requestDTO.setContent(null);
+                return new ResponseEntity(requestDTO, HttpStatus.BAD_REQUEST);
+            }
 
 
         }catch (Exception e){
@@ -61,21 +60,21 @@ public class PatientController {
 
     }
 
-    @PutMapping ("/updatePatient")
-    public ResponseEntity updatePatient(@RequestBody PatientDTO patientDTO ){
+    @PutMapping("/updateEmployee")
+    public ResponseEntity updateEmployee(@RequestBody EmployeeDTO employeeDTO ){
         try{
-            String res=patientService.updatePatient(patientDTO);
+            String res=employeeService.updateEmployee(employeeDTO);
 
             if (res.equals("00")){
                 requestDTO.setCode(VarList.RSP_SUCCESS);
                 requestDTO.setMessege("Success");
-                requestDTO.setContent(patientDTO);
+                requestDTO.setContent(employeeDTO);
                 return new ResponseEntity(requestDTO, HttpStatus.ACCEPTED);
             }
             else if(res.equals("01")){
                 requestDTO.setCode(VarList.RSP_NO_DATA_FOUND);
                 requestDTO.setMessege("User Not found");
-                requestDTO.setContent(patientDTO);
+                requestDTO.setContent(employeeDTO);
                 return new ResponseEntity(requestDTO, HttpStatus.BAD_REQUEST);
             }
             else {
@@ -96,44 +95,44 @@ public class PatientController {
 
 
     }
-    @GetMapping("/getAllPatient")
-    public ResponseEntity getAllPatient (){
-    try{
-        List<PatientDTO> patientDTOList= patientService.getAllPatient();
-        if (patientDTOList !=null){
+    @GetMapping("/getAllEmployee")
+    public ResponseEntity getAllEmployee (){
+        try{
+            List<EmployeeDTO> employeeDTOList= employeeService.getAllEmployee();
+            if (employeeDTOList !=null){
+                requestDTO.setCode(VarList.RSP_SUCCESS);
+                requestDTO.setMessege("Success");
+                requestDTO.setContent(employeeDTOList);
+                return new ResponseEntity(requestDTO, HttpStatus.ACCEPTED);
+            }
+            else {
+                requestDTO.setCode(VarList.RSP_NO_DATA_FOUND);
+                requestDTO.setMessege("User Not found");
+                requestDTO.setContent(null);
+                return new ResponseEntity(requestDTO, HttpStatus.BAD_REQUEST);
+            }
+
+
+
+        }catch (Exception e){
             requestDTO.setCode(VarList.RSP_SUCCESS);
-            requestDTO.setMessege("Success");
-            requestDTO.setContent(patientDTOList);
-            return new ResponseEntity(requestDTO, HttpStatus.ACCEPTED);
-        }
-        else {
-            requestDTO.setCode(VarList.RSP_NO_DATA_FOUND);
-            requestDTO.setMessege("User Not found");
+            requestDTO.setMessege(e.getMessage());
             requestDTO.setContent(null);
-            return new ResponseEntity(requestDTO, HttpStatus.BAD_REQUEST);
+            return new ResponseEntity(requestDTO, HttpStatus.INTERNAL_SERVER_ERROR);
         }
 
-
-
-    }catch (Exception e){
-        requestDTO.setCode(VarList.RSP_SUCCESS);
-        requestDTO.setMessege(e.getMessage());
-        requestDTO.setContent(null);
-        return new ResponseEntity(requestDTO, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
-    }
-
-    @GetMapping("/searchPatient/{patientId}")
-    public ResponseEntity searchPatient(@PathVariable int patientId){
+    @GetMapping("/searchEmployee/{employeeId}")
+    public ResponseEntity searchEmployee(@PathVariable int employeeId){
 
 
         try{
-            PatientDTO searchedPatient=patientService.searchPatient(patientId);
-            if (searchedPatient !=null){
+            EmployeeDTO searchedEmployee=employeeService.searchEmployee(employeeId);
+            if (searchedEmployee !=null){
                 requestDTO.setCode(VarList.RSP_SUCCESS);
                 requestDTO.setMessege("Success");
-                requestDTO.setContent(searchedPatient);
+                requestDTO.setContent(searchedEmployee);
                 return new ResponseEntity(requestDTO, HttpStatus.ACCEPTED);
             }
             else {
@@ -154,11 +153,11 @@ public class PatientController {
     }
 
 
-    @DeleteMapping("/deletePatient/{patientId}")
-    public ResponseEntity patientDelete(@PathVariable int patientId){
+    @DeleteMapping("/deleteEmployee/{employeeId}")
+    public ResponseEntity employeeDelete(@PathVariable int employeeId){
 
         try{
-            String res=patientService.patientDelete(patientId);
+            String res=employeeService.employeeDelete(employeeId);
             if (res.equals("00")){
                 requestDTO.setCode(VarList.RSP_SUCCESS);
                 requestDTO.setMessege("Success");
@@ -179,8 +178,4 @@ public class PatientController {
             return new ResponseEntity(requestDTO, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-
-
 }
-
-

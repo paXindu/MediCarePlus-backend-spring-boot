@@ -27,7 +27,7 @@ public class PatientService  {
 
     public String savePatient(PatientDTO patientDTO){
 
-        if (patientRepo.existsById(patientDTO.getPatientId())){
+        if (patientRepo.existsById(patientDTO.getPatientNic())){
             return VarList.RSP_DUPLICATED;
 
         }else {
@@ -40,7 +40,7 @@ public class PatientService  {
 
     public String updatePatient(PatientDTO patientDTO){
 
-        if (patientRepo.existsById(patientDTO.getPatientId())){
+        if (patientRepo.existsById(patientDTO.getPatientNic())){
             patientRepo.save(modelMapper.map(patientDTO, Patient.class));
             return VarList.RSP_SUCCESS;
 
