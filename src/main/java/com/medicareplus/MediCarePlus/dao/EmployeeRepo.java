@@ -1,4 +1,4 @@
-package com.medicareplus.MediCarePlus.repo;
+package com.medicareplus.MediCarePlus.dao;
 
 import com.medicareplus.MediCarePlus.entity.Employee;
 import org.springframework.data.jpa.repository.JpaRepository;

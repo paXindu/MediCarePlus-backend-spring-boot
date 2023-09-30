@@ -1,15 +1,8 @@
 package com.medicareplus.MediCarePlus.service;
-
-import com.medicareplus.MediCarePlus.dto.EmployeeDTO;
 import com.medicareplus.MediCarePlus.entity.Employee;
-import com.medicareplus.MediCarePlus.repo.EmployeeRepo;
-import com.medicareplus.MediCarePlus.util.EmployeeRoll;
-import com.medicareplus.MediCarePlus.util.VarList;
-import org.modelmapper.ModelMapper;
-import org.modelmapper.TypeToken;
+import com.medicareplus.MediCarePlus.dao.EmployeeRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 
 @Service
@@ -18,58 +11,38 @@ public class EmployeeService {
 
     @Autowired
     private EmployeeRepo employeeRepo;
+    public String saveEmployee(Employee employee) {
 
-    @Autowired
-    private ModelMapper modelMapper;
-
-
-
-    public String saveEmployee(EmployeeDTO employeeDTO) {
-
-        if (employeeRepo.existsById(employeeDTO.getEmployeeNic())) {
-            return VarList.RSP_DUPLICATED;
-        } else {
-            employeeRepo.save(modelMapper.map(employeeDTO, Employee.class));
-            return VarList.RSP_SUCCESS;
-            }
-
+        employeeRepo.save(employee);
+        return "SUCCESS";
     }
-    public String updateEmployee(EmployeeDTO employeeDTO){
 
-        if (employeeRepo.existsById(employeeDTO.getEmployeeNic())){
-            employeeRepo.save(modelMapper.map(employeeDTO, Employee.class));
-            return VarList.RSP_SUCCESS;
+    public String updateEmployee(Employee employee) {
 
-        }else {
-
-
-            return VarList.RSP_NO_DATA_FOUND;
+        if (employeeRepo.existsById(employee.getEmployeeNic())) {
+            employeeRepo.save(employee);
 
         }
+        return "SUCCESS";
     }
 
 
-    public List<EmployeeDTO> getAllEmployee() {
-        List<Employee> allEmployeeList = employeeRepo.findAll();
-        return modelMapper.map(allEmployeeList, new TypeToken<List<EmployeeDTO>>() {}.getType());
+    public List<Employee> getAllEmployee() {
+
+        return employeeRepo.findAll();
     }
 
 
-    public EmployeeDTO searchEmployee(int employeeId){
-        if(employeeRepo.existsById(employeeId)) {
-            Employee searchedEmployee = employeeRepo.findById(employeeId).orElse(null);
-            return modelMapper.map(searchedEmployee, EmployeeDTO.class);
-        }
-        else {
-            return null;
-        }
+    public Employee searchEmployee(int employeeId) {
+        return employeeRepo.findById(employeeId).orElse(null);
     }
+
 
 
     public String employeeDelete(int employeeId){
-        if(employeeRepo.existsById(employeeId)){
+
             employeeRepo.deleteById(employeeId);
-            return VarList.RSP_SUCCESS;
-        }else return VarList.RSP_NO_DATA_FOUND;
+            return "SUCCESS";
+
     }
 }
