@@ -1,82 +1,50 @@
 package com.medicareplus.MediCarePlus.service;
-import org.modelmapper.TypeToken;
+import com.medicareplus.MediCarePlus.dao.PatientRepo;
 import com.medicareplus.MediCarePlus.entity.Patient;
-import com.medicareplus.MediCarePlus.repo.PatientRepo;
-import com.medicareplus.MediCarePlus.util.VarList;
-import jakarta.transaction.Transactional;
-import org.modelmapper.ModelMapper;
-import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.jpa.repository.JpaRepository;
-import com.medicareplus.MediCarePlus.dto.PatientDTO;
 import org.springframework.stereotype.Service;
-
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Service
-@Transactional
-public class PatientService  {
+public class PatientService {
+
 
     @Autowired
     private PatientRepo patientRepo;
+    public String savePatient(Patient patient) {
 
-    @Autowired
-    private ModelMapper modelMapper;
-
-    public String savePatient(PatientDTO patientDTO){
-
-        if (patientRepo.existsById(patientDTO.getPatientNic())){
-            return VarList.RSP_DUPLICATED;
-
-        }else {
-
-            patientRepo.save(modelMapper.map(patientDTO, Patient.class));
-            return VarList.RSP_SUCCESS;
-
-        }
+        patientRepo.save(patient);
+        return "SUCCESS";
     }
 
-    public String updatePatient(PatientDTO patientDTO){
+    public String updatePatient(Patient patient) {
 
-        if (patientRepo.existsById(patientDTO.getPatientNic())){
-            patientRepo.save(modelMapper.map(patientDTO, Patient.class));
-            return VarList.RSP_SUCCESS;
-
-        }else {
-
-
-            return VarList.RSP_NO_DATA_FOUND;
+        if (patientRepo.existsById(patient.getPatientNic())) {
+            patientRepo.save(patient);
 
         }
+        return "SUCCESS";
     }
 
 
-    public List<PatientDTO> getAllPatient() {
-        List<Patient> allPatientList = patientRepo.findAll();
-        return modelMapper.map(allPatientList, new TypeToken<List<PatientDTO>>() {}.getType());
+    public List<Patient> getAllPatient() {
+
+        return patientRepo.findAll();
     }
 
 
-    public PatientDTO searchPatient(int patientId){
-        if(patientRepo.existsById(patientId)) {
-            Patient searchedPatient = patientRepo.findById(patientId).orElse(null);
-            return modelMapper.map(searchedPatient, PatientDTO.class);
-        }
-        else {
-            return null;
-        }
+    public Patient searchPatient(int patientId) {
+        return patientRepo.findById(patientId).orElse(null);
     }
+
 
 
     public String patientDelete(int patientId){
-        if(patientRepo.existsById(patientId)){
-            patientRepo.deleteById(patientId);
-            return VarList.RSP_SUCCESS;
-        }else return VarList.RSP_NO_DATA_FOUND;
-    }
 
+        patientRepo.deleteById(patientId);
+        return "SUCCESS";
+
+    }
 }
 
 
