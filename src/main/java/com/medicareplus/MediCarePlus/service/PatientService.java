@@ -1,82 +1,85 @@
 package com.medicareplus.MediCarePlus.service;
-import org.modelmapper.TypeToken;
+import com.medicareplus.MediCarePlus.dao.PatientRepo;
 import com.medicareplus.MediCarePlus.entity.Patient;
-import com.medicareplus.MediCarePlus.repo.PatientRepo;
-import com.medicareplus.MediCarePlus.util.VarList;
-import jakarta.transaction.Transactional;
-import org.modelmapper.ModelMapper;
-import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.jpa.repository.JpaRepository;
-import com.medicareplus.MediCarePlus.dto.PatientDTO;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Service
-@Transactional
-public class PatientService  {
+public class PatientService {
+
 
     @Autowired
     private PatientRepo patientRepo;
+    public ResponseEntity<String> savePatient(Patient patient) {
+        try {
+        patientRepo.save(patient);
+            return new ResponseEntity<>("Success", HttpStatus.CREATED);
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
 
-    @Autowired
-    private ModelMapper modelMapper;
+        return new ResponseEntity<>("Bad request",HttpStatus.BAD_REQUEST);
+    }
 
-    public String savePatient(PatientDTO patientDTO){
 
-        if (patientRepo.existsById(patientDTO.getPatientNic())){
-            return VarList.RSP_DUPLICATED;
+    public ResponseEntity<String> updatePatient(Patient patient) {
+        try {
+        if (patientRepo.existsById(patient.getPatientNic())) {
+            patientRepo.save(patient);
 
-        }else {
+        }
+            return new ResponseEntity<>("Updated",HttpStatus.OK);
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+        return new ResponseEntity<>("Bad request",HttpStatus.BAD_REQUEST);
+    }
 
-            patientRepo.save(modelMapper.map(patientDTO, Patient.class));
-            return VarList.RSP_SUCCESS;
 
+    public ResponseEntity <List<Patient>> getAllPatient() {
+        try {
+            return new ResponseEntity<>( patientRepo.findAll(),HttpStatus.OK);
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+        return new ResponseEntity<>(new ArrayList<>(), HttpStatus.BAD_REQUEST);
+    }
+
+
+    public ResponseEntity<Patient> searchPatient(int patientId) {
+        try {
+            return new ResponseEntity<>(patientRepo.findById(patientId).orElse(null),HttpStatus.FOUND);
+
+        }catch (Exception e){
+            e.printStackTrace();
+            {
+                return new ResponseEntity<>( HttpStatus.NOT_FOUND);
+            }
         }
     }
 
-    public String updatePatient(PatientDTO patientDTO){
-
-        if (patientRepo.existsById(patientDTO.getPatientNic())){
-            patientRepo.save(modelMapper.map(patientDTO, Patient.class));
-            return VarList.RSP_SUCCESS;
-
-        }else {
 
 
-            return VarList.RSP_NO_DATA_FOUND;
+    public ResponseEntity<String> patientDelete(int patientId){
+        try {
+        patientRepo.deleteById(patientId);
+            return new ResponseEntity<>("Deleted", HttpStatus.OK);
 
+        } catch (Exception e) {
+            e.printStackTrace();
         }
+
+        return new ResponseEntity<>( HttpStatus.BAD_REQUEST);
+
     }
-
-
-    public List<PatientDTO> getAllPatient() {
-        List<Patient> allPatientList = patientRepo.findAll();
-        return modelMapper.map(allPatientList, new TypeToken<List<PatientDTO>>() {}.getType());
-    }
-
-
-    public PatientDTO searchPatient(int patientId){
-        if(patientRepo.existsById(patientId)) {
-            Patient searchedPatient = patientRepo.findById(patientId).orElse(null);
-            return modelMapper.map(searchedPatient, PatientDTO.class);
-        }
-        else {
-            return null;
-        }
-    }
-
-
-    public String patientDelete(int patientId){
-        if(patientRepo.existsById(patientId)){
-            patientRepo.deleteById(patientId);
-            return VarList.RSP_SUCCESS;
-        }else return VarList.RSP_NO_DATA_FOUND;
-    }
-
 }
 
 
