@@ -1,7 +1,9 @@
 package com.medicareplus.MediCarePlus.controller;
 import com.medicareplus.MediCarePlus.entity.Employee;
 import com.medicareplus.MediCarePlus.service.EmployeeService;
+import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -17,33 +19,33 @@ public class EmployeeController {
 
 
     @PostMapping("/saveEmployee")
-    public String saveEmployee(@RequestBody Employee employee){
+    public ResponseEntity <String> saveEmployee(@RequestBody Employee employee){
         return employeeService.saveEmployee(employee);
 
     }
 
     @PutMapping("/updateEmployee")
-    public String updateEmployee(@RequestBody Employee employee){
+    public ResponseEntity<String> updateEmployee(@RequestBody Employee employee){
         return employeeService.updateEmployee(employee);
 
 
     }
     @GetMapping("/getAllEmployee")
-    public List<Employee> getAllEmployee (){
+    public ResponseEntity<List<Employee>> getAllEmployee (){
 
         return employeeService.getAllEmployee();
 
     }
 
     @GetMapping("/searchEmployee/{employeeId}")
-    public Employee searchEmployee(@PathVariable int employeeId) {
+    public ResponseEntity<Employee> searchEmployee(@PathVariable int employeeId) {
 
         return employeeService.searchEmployee(employeeId);
     }
 
 
     @DeleteMapping("/deleteEmployee/{employeeId}")
-    public String employeeDelete(@PathVariable int employeeId) {
+    public ResponseEntity<String> employeeDelete(@PathVariable int employeeId) {
 
         return employeeService.employeeDelete(employeeId);
 

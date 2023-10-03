@@ -20,7 +20,7 @@ public class PatientController {
 
 
     @PostMapping("/savePatient")
-    public String savePatient(@RequestBody Patient patient){
+    public ResponseEntity<String> savePatient(@RequestBody Patient patient){
         return patientService.savePatient(patient);
 
     }

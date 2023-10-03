@@ -2,7 +2,11 @@ package com.medicareplus.MediCarePlus.service;
 import com.medicareplus.MediCarePlus.entity.Employee;
 import com.medicareplus.MediCarePlus.dao.EmployeeRepo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -11,38 +15,67 @@ public class EmployeeService {
 
     @Autowired
     private EmployeeRepo employeeRepo;
-    public String saveEmployee(Employee employee) {
+    public ResponseEntity<String> saveEmployee(Employee employee) {
+        try {
+            employeeRepo.save(employee);
+            return new ResponseEntity<>("Success",HttpStatus.CREATED);
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
 
-        employeeRepo.save(employee);
-        return "SUCCESS";
+        return new ResponseEntity<>("Bad request",HttpStatus.BAD_REQUEST);
     }
 
-    public String updateEmployee(Employee employee) {
-
+    public ResponseEntity<String> updateEmployee(Employee employee) {
+        try {
         if (employeeRepo.existsById(employee.getEmployeeNic())) {
             employeeRepo.save(employee);
 
         }
-        return "SUCCESS";
+            return new ResponseEntity<>("Updated",HttpStatus.OK);
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+        return new ResponseEntity<>("Bad request",HttpStatus.BAD_REQUEST);
     }
 
 
-    public List<Employee> getAllEmployee() {
-
-        return employeeRepo.findAll();
+    public ResponseEntity <List<Employee>> getAllEmployee() {
+        try {
+            return new ResponseEntity<>(employeeRepo.findAll(), HttpStatus.OK);
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+        return new ResponseEntity<>(new ArrayList<>(), HttpStatus.BAD_REQUEST);
     }
 
 
-    public Employee searchEmployee(int employeeId) {
-        return employeeRepo.findById(employeeId).orElse(null);
+    public ResponseEntity<Employee> searchEmployee(int employeeId) {
+
+        try {
+            return new ResponseEntity<>(employeeRepo.findById(employeeId).orElse(null), HttpStatus.OK);
+        }catch (Exception e){
+            e.printStackTrace();
+            {
+                return new ResponseEntity<>( HttpStatus.NOT_FOUND);
+            }
+        }
     }
 
 
 
-    public String employeeDelete(int employeeId){
-
+    public ResponseEntity<String> employeeDelete(int employeeId){
+        try {
             employeeRepo.deleteById(employeeId);
-            return "SUCCESS";
+            return new ResponseEntity<>("Deleted", HttpStatus.OK);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return new ResponseEntity<>( HttpStatus.BAD_REQUEST);
 
     }
 }

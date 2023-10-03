@@ -2,7 +2,11 @@ package com.medicareplus.MediCarePlus.service;
 import com.medicareplus.MediCarePlus.dao.PatientRepo;
 import com.medicareplus.MediCarePlus.entity.Patient;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -11,38 +15,69 @@ public class PatientService {
 
     @Autowired
     private PatientRepo patientRepo;
-    public String savePatient(Patient patient) {
-
+    public ResponseEntity<String> savePatient(Patient patient) {
+        try {
         patientRepo.save(patient);
-        return "SUCCESS";
+            return new ResponseEntity<>("Success", HttpStatus.CREATED);
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+
+        return new ResponseEntity<>("Bad request",HttpStatus.BAD_REQUEST);
     }
 
-    public String updatePatient(Patient patient) {
 
+    public ResponseEntity<String> updatePatient(Patient patient) {
+        try {
         if (patientRepo.existsById(patient.getPatientNic())) {
             patientRepo.save(patient);
 
         }
-        return "SUCCESS";
+            return new ResponseEntity<>("Updated",HttpStatus.OK);
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+        return new ResponseEntity<>("Bad request",HttpStatus.BAD_REQUEST);
     }
 
 
-    public List<Patient> getAllPatient() {
-
-        return patientRepo.findAll();
+    public ResponseEntity <List<Patient>> getAllPatient() {
+        try {
+            return new ResponseEntity<>( patientRepo.findAll(),HttpStatus.OK);
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+        return new ResponseEntity<>(new ArrayList<>(), HttpStatus.BAD_REQUEST);
     }
 
 
-    public Patient searchPatient(int patientId) {
-        return patientRepo.findById(patientId).orElse(null);
+    public ResponseEntity<Patient> searchPatient(int patientId) {
+        try {
+            return new ResponseEntity<>(patientRepo.findById(patientId).orElse(null),HttpStatus.FOUND);
+
+        }catch (Exception e){
+            e.printStackTrace();
+            {
+                return new ResponseEntity<>( HttpStatus.NOT_FOUND);
+            }
+        }
     }
 
 
 
-    public String patientDelete(int patientId){
-
+    public ResponseEntity<String> patientDelete(int patientId){
+        try {
         patientRepo.deleteById(patientId);
-        return "SUCCESS";
+            return new ResponseEntity<>("Deleted", HttpStatus.OK);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return new ResponseEntity<>( HttpStatus.BAD_REQUEST);
 
     }
 }
