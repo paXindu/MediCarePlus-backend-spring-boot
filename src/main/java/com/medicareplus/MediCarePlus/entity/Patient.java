@@ -15,6 +15,7 @@ import lombok.NoArgsConstructor;
 
 public class Patient {
     @Id
+    @OneToMany(mappedBy = "patientNic")
     private int patientNic;
     private int patientPhone;
     private String patientPassword;

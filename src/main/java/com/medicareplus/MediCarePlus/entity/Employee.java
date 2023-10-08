@@ -19,6 +19,7 @@ public class Employee {
 
 
     @Id
+    @OneToMany(mappedBy = "employeeNic")
     private int employeeNic;
 
     private String employeeName;

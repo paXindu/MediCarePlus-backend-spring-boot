@@ -19,10 +19,10 @@ public class Appointment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int appointmentId;
-
+    @ManyToOne
     private int patientNic;
-
-    private int employeeId;
+    @ManyToOne
+    private int employeeNic;
 
 
 }
