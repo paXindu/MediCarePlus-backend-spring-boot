@@ -21,18 +21,17 @@ public class AppointmentService {
        private AppointmentRepo appointmentRepo;
 
 
+    public String newAppointment(int employeeId, int patientNic){
 
-    public String newAppointment(int employeeNic, int patientNic){
-
-        if (employeeRepo.existsById(employeeNic) && patientRepo.existsById(patientNic))
+        if (employeeRepo.existsById(employeeId) && patientRepo.existsById(patientNic))
         {
 
-            Employee employee=employeeRepo.findById(employeeNic).get();
-            Patient patient=patientRepo.findById(patientNic).get();
-            
-//            appointment.setPatientNic(patientNic);
-//            appointment.setEmployeeNic(employeeNic);
-//            appointmentRepo.save(appointment);
+            Patient patient = patientRepo.findById(patientNic).orElse(null);
+            Employee employee = employeeRepo.findById(employeeId).orElse(null);
+
+            appointment.setPatient(patient);
+            appointment.setEmployee(employee);
+            appointmentRepo.save(appointment);
             return "ok";
         }
 

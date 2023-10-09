@@ -18,11 +18,14 @@ public class Appointment {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int appointmentId;
+    private int appointmentNic;
+
     @ManyToOne
-    private int patientNic;
+    @JoinColumn(name = "patientNic")
+    private Patient patient;
     @ManyToOne
-    private int employeeNic;
+    @JoinColumn(name = "employeeNic")
+    private Employee employee;
 
 
 }

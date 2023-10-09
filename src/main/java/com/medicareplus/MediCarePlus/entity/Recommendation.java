@@ -16,7 +16,6 @@ public class Recommendation {
         @Id
         @GeneratedValue(strategy = GenerationType.IDENTITY)
         private int recommendationId;
-        @OneToOne
         private int appointmentId;
 
 
