@@ -14,7 +14,7 @@ public class AppointmentController {
     AppointmentService appointmentService;
 
     @PostMapping("/newAppointment")
-    public String newAppointment(@RequestParam("employeeId") int employeeId, @RequestParam("patientNic") int patientNic) {
-        return appointmentService.newAppointment(employeeId, patientNic);
+    public String newAppointment(@RequestParam("employeeNic") int employeeNic, @RequestParam("patientNic") int patientNic) {
+        return appointmentService.newAppointment(employeeNic, patientNic);
     }
 }

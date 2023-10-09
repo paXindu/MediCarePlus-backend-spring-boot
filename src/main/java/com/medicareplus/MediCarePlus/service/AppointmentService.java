@@ -4,6 +4,8 @@ import com.medicareplus.MediCarePlus.dao.AppointmentRepo;
 import com.medicareplus.MediCarePlus.dao.EmployeeRepo;
 import com.medicareplus.MediCarePlus.dao.PatientRepo;
 import com.medicareplus.MediCarePlus.entity.Appointment;
+import com.medicareplus.MediCarePlus.entity.Employee;
+import com.medicareplus.MediCarePlus.entity.Patient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,13 +21,16 @@ public class AppointmentService {
        private AppointmentRepo appointmentRepo;
 
 
-
     public String newAppointment(int employeeId, int patientNic){
 
         if (employeeRepo.existsById(employeeId) && patientRepo.existsById(patientNic))
         {
-            appointment.setPatientNic(patientNic);
-            appointment.setEmployeeId(employeeId);
+
+            Patient patient = patientRepo.findById(patientNic).orElse(null);
+            Employee employee = employeeRepo.findById(employeeId).orElse(null);
+
+            appointment.setPatient(patient);
+            appointment.setEmployee(employee);
             appointmentRepo.save(appointment);
             return "ok";
         }

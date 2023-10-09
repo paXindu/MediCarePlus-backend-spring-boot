@@ -2,9 +2,7 @@ package com.medicareplus.MediCarePlus.controller;
 
 import com.medicareplus.MediCarePlus.entity.Patient;
 import com.medicareplus.MediCarePlus.service.PatientService;
-import com.medicareplus.MediCarePlus.service.PatientService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,27 +24,27 @@ public class PatientController {
     }
 
     @PutMapping("/updatePatient")
-    public String updatePatient(@RequestBody Patient patient){
+    public ResponseEntity<String> updatePatient(@RequestBody Patient patient){
         return patientService.updatePatient(patient);
 
 
     }
     @GetMapping("/getAllPatient")
-    public List<Patient> getAllPatient (){
+    public ResponseEntity<List<Patient>> getAllPatient (){
 
         return patientService.getAllPatient();
 
     }
 
     @GetMapping("/searchPatient/{patientId}")
-    public Patient searchPatient(@PathVariable int patientId) {
+    public ResponseEntity<Patient> searchPatient(@PathVariable int patientId) {
 
         return patientService.searchPatient(patientId);
     }
 
 
     @DeleteMapping("/deletePatient/{patientId}")
-    public String patientDelete(@PathVariable int patientId) {
+    public ResponseEntity<String> patientDelete(@PathVariable int patientId) {
 
         return patientService.patientDelete(patientId);
 
