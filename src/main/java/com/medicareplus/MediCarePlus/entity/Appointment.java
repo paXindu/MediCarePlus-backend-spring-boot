@@ -1,16 +1,11 @@
 package com.medicareplus.MediCarePlus.entity;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+
 import org.springframework.stereotype.Component;
 
 
 @Entity
 @Component
-@AllArgsConstructor
-@NoArgsConstructor
-@Data
 @Table(name="Appointment")
 
 public class Appointment {
@@ -18,7 +13,7 @@ public class Appointment {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int appointmentNic;
+    private int appointmentId;
 
     @ManyToOne
     @JoinColumn(name = "patientNic")
@@ -28,5 +23,29 @@ public class Appointment {
     private Employee employee;
 
 
+
+    public int getAppointmentId() {
+        return appointmentId;
+    }
+
+    public void setAppointmentId(int appointmentId) {
+        this.appointmentId = appointmentId;
+    }
+
+    public Patient getPatient() {
+        return patient;
+    }
+
+    public void setPatient(Patient patient) {
+        this.patient = patient;
+    }
+
+    public Employee getEmployee() {
+        return employee;
+    }
+
+    public void setEmployee(Employee employee) {
+        this.employee = employee;
+    }
 }
 
