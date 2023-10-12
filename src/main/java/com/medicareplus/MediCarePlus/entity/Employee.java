@@ -2,15 +2,10 @@ package com.medicareplus.MediCarePlus.entity;
 
 import com.medicareplus.MediCarePlus.util.EmployeeRoll;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.NonNull;
+
 
 @Entity
-@AllArgsConstructor
-@NoArgsConstructor
-@Data
+
 @Table(name="Employee")
 
 
@@ -27,4 +22,27 @@ public class Employee {
     private EmployeeRoll employeeRoll;
 
 
+    public int getEmployeeNic() {
+        return employeeNic;
+    }
+
+    public void setEmployeeNic(int employeeNic) {
+        this.employeeNic = employeeNic;
+    }
+
+    public String getEmployeeName() {
+        return employeeName;
+    }
+
+    public void setEmployeeName(String employeeName) {
+        this.employeeName = employeeName;
+    }
+
+    public EmployeeRoll getEmployeeRoll() {
+        return employeeRoll;
+    }
+
+    public void setEmployeeRoll(EmployeeRoll employeeRoll) {
+        this.employeeRoll = employeeRoll;
+    }
 }

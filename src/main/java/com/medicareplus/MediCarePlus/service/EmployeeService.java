@@ -1,6 +1,6 @@
 package com.medicareplus.MediCarePlus.service;
 import com.medicareplus.MediCarePlus.entity.Employee;
-import com.medicareplus.MediCarePlus.dao.EmployeeRepo;
+import com.medicareplus.MediCarePlus.repository.EmployeeRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -53,10 +53,10 @@ public class EmployeeService {
     }
 
 
-    public ResponseEntity<Employee> searchEmployee(int employeeId) {
+    public ResponseEntity<Employee> searchEmployee(int employeeNic) {
 
         try {
-            return new ResponseEntity<>(employeeRepo.findById(employeeId).orElse(null), HttpStatus.OK);
+            return new ResponseEntity<>(employeeRepo.findById(employeeNic).orElse(null), HttpStatus.OK);
         }catch (Exception e){
             e.printStackTrace();
             {
@@ -67,9 +67,9 @@ public class EmployeeService {
 
 
 
-    public ResponseEntity<String> employeeDelete(int employeeId){
+    public ResponseEntity<String> employeeDelete(int employeeNic){
         try {
-            employeeRepo.deleteById(employeeId);
+            employeeRepo.deleteById(employeeNic);
             return new ResponseEntity<>("Deleted", HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace();

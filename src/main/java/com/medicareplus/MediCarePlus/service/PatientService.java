@@ -1,5 +1,5 @@
 package com.medicareplus.MediCarePlus.service;
-import com.medicareplus.MediCarePlus.dao.PatientRepo;
+import com.medicareplus.MediCarePlus.repository.PatientRepo;
 import com.medicareplus.MediCarePlus.entity.Patient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

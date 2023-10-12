@@ -37,17 +37,17 @@ public class EmployeeController {
 
     }
 
-    @GetMapping("/searchEmployee/{employeeId}")
-    public ResponseEntity<Employee> searchEmployee(@PathVariable int employeeId) {
+    @GetMapping("/searchEmployee/{employeeNic}")
+    public ResponseEntity<Employee> searchEmployee(@PathVariable int employeeNic) {
 
-        return employeeService.searchEmployee(employeeId);
+        return employeeService.searchEmployee(employeeNic);
     }
 
 
-    @DeleteMapping("/deleteEmployee/{employeeId}")
-    public ResponseEntity<String> employeeDelete(@PathVariable int employeeId) {
+    @DeleteMapping("/deleteEmployee/{employeeNic}")
+    public ResponseEntity<String> employeeDelete(@PathVariable int employeeNic) {
 
-        return employeeService.employeeDelete(employeeId);
+        return employeeService.employeeDelete(employeeNic);
 
     }
 }
