@@ -26,7 +26,7 @@ public class AppointmentService {
        private AppointmentRepo appointmentRepo;
 
 
-    public ResponseEntity<Integer> newAppointment(int employeeId, int patientNic){
+    public ResponseEntity<Integer> newAppointment(int employeeId, String patientNic){
 
         if (employeeRepo.existsById(employeeId) && patientRepo.existsById(patientNic))
         {

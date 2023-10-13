@@ -37,14 +37,14 @@ public class PatientController {
     }
 
     @GetMapping("/searchPatient/{patientId}")
-    public ResponseEntity<Patient> searchPatient(@PathVariable int patientId) {
+    public ResponseEntity<Patient> searchPatient(@PathVariable String patientId) {
 
         return patientService.searchPatient(patientId);
     }
 
 
     @DeleteMapping("/deletePatient/{patientId}")
-    public ResponseEntity<String> patientDelete(@PathVariable int patientId) {
+    public ResponseEntity<String> patientDelete(@PathVariable String patientId) {
 
         return patientService.patientDelete(patientId);
 
