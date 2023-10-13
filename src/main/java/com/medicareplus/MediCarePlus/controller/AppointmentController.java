@@ -15,7 +15,7 @@ public class AppointmentController {
     AppointmentService appointmentService;
 
     @PutMapping("/newAppointment")
-    public ResponseEntity<Integer> newAppointment(@RequestParam("employeeNic") int employeeNic, @RequestParam("patientNic") int patientNic) {
+    public ResponseEntity<Integer> newAppointment(@RequestParam("employeeNic") int employeeNic, @RequestParam("patientNic") String patientNic) {
         return appointmentService.newAppointment(employeeNic, patientNic);
     }
 }
